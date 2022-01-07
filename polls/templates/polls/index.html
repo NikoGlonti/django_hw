@@ -8,6 +8,7 @@
             <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
         </head>
         <body>
+        <p><a href="{% url 'polls:hypotenuse_of_triangle' %}">Вычесление гипотенузы</a></p>
             {% if latest_question_list %}
                 <ul>
                 {% for question in latest_question_list %}

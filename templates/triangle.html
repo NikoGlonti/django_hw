@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Triangle Form</title>
+</head>
+<body>
+ {% if  hypotenuse %}
+     <p>гипотенуза равна {{hypotenuse}}</p>
+ {% else %}
+<form action="{% url 'polls:hypotenuse_of_triangle' %}" method="post">
+    {% csrf_token %}
+{{ form.as_p }}
+    <input type="submit">
+    </form>
+{% endif %}
+</body>
+</html>
