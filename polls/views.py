@@ -1,13 +1,13 @@
 import math
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
 from .forms import LegsOfTriangle, PersonForm
-from .models import Choice, Question, Person
+from .models import Choice, Person, Question
 
 
 class IndexView(generic.ListView):
