@@ -10,7 +10,7 @@
  {% else %}
 <form action="{% url 'polls:hypotenuse_of_triangle' %}" method="post">
     {% csrf_token %}
-{{ form.as_p }}
+    {{ form.as_p }}
     <input type="submit">
     </form>
 {% endif %}

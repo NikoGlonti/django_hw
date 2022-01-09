@@ -9,6 +9,8 @@
         </head>
         <body>
         <p><a href="{% url 'polls:hypotenuse_of_triangle' %}">Вычесление гипотенузы</a></p>
+        <p><a href="{% url 'polls:create_pers' %}">person</a></p>
+
             {% if latest_question_list %}
                 <ul>
                 {% for question in latest_question_list %}

@@ -1,13 +1,13 @@
 import math
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from .forms import LegsOfTriangle
-from .models import Choice, Question
+from .forms import LegsOfTriangle, PersonForm
+from .models import Choice, Question, Person
 
 
 class IndexView(generic.ListView):
@@ -82,5 +82,32 @@ def hypotenuse_of_triangle(request):
         form = LegsOfTriangle(request.POST)
 
     return render(request, 'triangle.html', {
+        'form': form,
+    })
+
+
+def create_pers(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("/polls")
+    else:
+        form = PersonForm(request.POST)
+    return render(request, 'person.html', {
+        'form': form,
+    })
+
+
+def person_pk(request, pk):
+    if request.method == 'POST':
+        person_p = get_object_or_404(Person, pk=pk)
+        form = PersonForm(request.POST, instance=person_p)
+        if form.is_valid():
+            form.save()
+            return redirect("/polls")
+    else:
+        form = PersonForm(request.POST)
+    return render(request, 'person.html', {
         'form': form,
     })
