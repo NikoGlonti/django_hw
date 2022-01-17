@@ -29,9 +29,9 @@ INSTALLED_APPS = [
 
 ]
 
-GRAPH_MODELS = {
-  'app_labels': ["hw_niko"],
-}
+# GRAPH_MODELS = {
+#   'app_labels': ["hw_niko"],
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
