@@ -123,9 +123,9 @@ def text_mail(request):
             text = form.cleaned_data['text']
             email = form.cleaned_data['email']
             date_time = form.cleaned_data['date_time']
-            send_email.delay((text, email), eta=date_time)
+            send_email.apply_async((text, email), eta=date_time)
             messages.success(request, 'Remind is created')
-            return redirect("text_mail")
+            return redirect("polls:index")
     else:
         form = TextEmail(initial={
             'date_time': f'{(datetime.now() + timedelta(hours=2)).strftime("%Y-%m-%d %H:%M:%S")}'
