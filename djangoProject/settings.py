@@ -17,6 +17,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_celery_results',
     'django_extensions',
     'hw_niko.apps.HwNikoConfig',
     'polls.apps.PollsConfig',
@@ -44,7 +45,7 @@ MIDDLEWARE = [
     'polls.middleware.middleware.SimpleMiddleware',
 ]
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = 'djangoProject.urls'
 
 TEMPLATES = [
     {
@@ -61,7 +62,7 @@ TEMPLATES = [
         },
     },
 ]
-WSGI_APPLICATION = 'mysite.wsgi.application'
+WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -111,3 +112,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = 'amqp://localhost:5672'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

@@ -1,4 +1,6 @@
 import math
+from datetime import datetime, timedelta
+from django.contrib import messages
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
@@ -6,8 +8,9 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from .forms import LegsOfTriangle, PersonForm
+from .forms import LegsOfTriangle, PersonForm, TextEmail
 from .models import Choice, Person, Question
+from .tasks import send_email
 
 
 class IndexView(generic.ListView):
@@ -109,5 +112,24 @@ def person_pk(request, pk):
     else:
         form = PersonForm(request.POST)
     return render(request, 'person.html', {
+        'form': form,
+    })
+
+
+def text_mail(request):
+    if request.method == "POST":
+        form = TextEmail(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            email = form.cleaned_data['email']
+            date_time = form.cleaned_data['date_time']
+            send_email.delay((text, email), eta=date_time)
+            messages.success(request, 'Remind is created')
+            return redirect("text_mail")
+    else:
+        form = TextEmail(initial={
+            'date_time': f'{(datetime.now() + timedelta(hours=2)).strftime("%Y-%m-%d %H:%M:%S")}'
+        })
+    return render(request, 'send_mail.html', {
         'form': form,
     })

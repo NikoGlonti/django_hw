@@ -11,6 +11,6 @@ urlpatterns = [
     path('triangle', views.hypotenuse_of_triangle, name='hypotenuse_of_triangle'),
     path('person', views.create_pers, name='create_pers'),
     path('person/<int:pk>', views.person_pk, name='person_pk'),
-
+    path('send_mail/', views.text_mail, name='text_mail'),
 
 ]
